@@ -4,20 +4,20 @@ This is web-based checklist/to-do app for employees in sumundi Inc. The app can 
 # Seting Up
 
 ## Install Composer Dependencies
-composer install
+`composer install`
 
 ## Install NPM Dependencies
-npm install
+`npm install`
 
 ## Create a copy of your .env file
-cp .env.example .env
+`cp .env.example .env`
 
 ## Generate an app encryption key
-php artisan key:generate
+`php artisan key:generate`
 
 ## Create an empty database for our application
 
 ## In the .env file, add database information to allow Laravel to connect to the database
 
 ## Migrate the database
-php artisan migrate
+`php artisan migrate`
