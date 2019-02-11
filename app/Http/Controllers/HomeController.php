@@ -33,7 +33,7 @@ class HomeController extends Controller
             $initials .= $n[0];
         }
 
-        $items  = ListItem::all();
+        $items  = ListItem::where('user_id',Auth::user()->id)->get();
         return view('home',['initials'=>$initials,'items'=>$items]);
     }
 
