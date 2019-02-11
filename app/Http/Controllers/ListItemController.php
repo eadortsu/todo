@@ -42,8 +42,7 @@ class ListItemController extends Controller
         $data = $request->all();
 
         $data['user_id'] = Auth::user()->id;
-        $data['status'] = '0';
-        $data['starred'] = '0';
+
         ListItem::create($data);
         return redirect('/');
     }
@@ -80,9 +79,10 @@ class ListItemController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $listItem = ListItem::find($id);
-        $listItem->status = $request->status;
-        $listItem->save();
+        $data = $request->all();
+        $listItem = ListItem::where('id', $id)
+            ->update($data);
+
        return $listItem;
     }
 

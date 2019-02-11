@@ -15,9 +15,7 @@
         }
     }
 
-    $('.module-list-info').on('click', function () {
-        window.location = "todo-inner.html";
-    });
+
 
     if (typeof sortable !== 'undefined') {
         $("#sortable").sortable();

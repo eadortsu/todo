@@ -48,6 +48,18 @@
                                         </li>
                                         <li>
                                             <a href="javascript:void(0)">
+                                                <i class="zmdi zmdi-info"></i>
+                                                <span>Priority</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">
+                                                <i class="zmdi zmdi-star"></i>
+                                                <span>Starred</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">
                                                 <i class="zmdi zmdi-check"></i>
                                                 <span>Done</span>
                                             </a>
@@ -155,7 +167,7 @@
                                      style="position: relative;">
 
                                     @foreach($items as $item)
-                                    <div id="item-{{$item->id}}" class="module-list-item">
+                                    <div  id="item-{{$item->id}}" class="module-list-item @if($item->status == '1') text-muted text-strikethrough @endif">
                                         <i class="zmdi zmdi-menu draggable-icon d-none d-sm-flex pr-1"></i>
                                         <div class="form-checkbox ml-sm-4 mr-3">
                                             <input id="check-item-{{$item->id}}"  onclick="checked_list('{{$item->id}}')" type="checkbox" @if($item->status == '1') checked @endif value="1" name="check">
@@ -166,10 +178,11 @@
                                         </a>
                                         <div class="module-list-info">
                                             <div class="row">
-                                                <div class="module-todo-content col-12 col-sm-12 col-xl-12">
+                                                <div class="module-todo-content col-10 col-sm-10 col-xl-10">
                                                     <div id="todo-item-title-{{$item->id}}" class="subject text-truncate
-@if($item->status == '1') text-muted text-strikethrough @endif">
+">
                                                         <h1>{{$item->title}}</h1>
+
                                                     </div>
                                                     <div class="manage-margin">
                                                         <p>{{$item->comment}}</p>
@@ -182,6 +195,20 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="col-md-2 col-sm-2">
+                                                    @if($item->starred == '0')
+                                                        <a  onclick="star_list({{$item->id}})" href="javascript:void(0)" class="action-btn">
+                                                            <i id="star-item-{{$item->id}}"  class="zmdi zmdi-star-outline"></i>
+                                                        </a>
+                                                        @else
+                                                        <a   onclick="unstar_list({{$item->id}})" href="javascript:void(0)" class="action-btn ">
+                                                            <i id="star-item-{{$item->id}}"  class="zmdi zmdi-star"></i>
+                                                        </a>
+                                                        @endif
+                                                        @if($item->priority == '1')
+                                                    <span class="badge text-white bg-red lighten-3">Priority</span>
+                                                        @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -251,6 +278,10 @@
 
                                 </div>
 
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="priority" value="1" id="remember"> High Priority</label>
+                                </div>
 
                                 <button type="submit" class="gx-btn gx-btn-primary" >
                                     <i class="zmdi zmdi-account-box"></i>
@@ -290,8 +321,8 @@
             url: "item/"+id,
             data: {status: status},
             success: function( msg ) {
-                document.getElementById("todo-item-title-"+ id).classList.toggle("text-muted");
-                document.getElementById("todo-item-title-"+ id).classList.toggle("text-strikethrough");
+                document.getElementById("item-"+ id).classList.toggle("text-muted");
+                document.getElementById("item-"+ id).classList.toggle("text-strikethrough");
 
             }
         });
@@ -299,6 +330,45 @@
 
 
     }
+
+    function star_list(id) {
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            type: "PUT",
+            url: "item/"+id,
+            data: {starred: '1'},
+            success: function( msg ) {
+                document.getElementById("star-item-"+ id).classList.toggle("zmdi-star");
+                document.getElementById("star-item-"+ id).classList.toggle("zmdi-star-outline");
+
+            }
+        });
+
+
+
+    }
+    function unstar_list(id) {
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            type: "PUT",
+            url: "item/"+id,
+            data: {starred: '0'},
+            success: function( msg ) {
+                document.getElementById("star-item-"+ id).classList.toggle("zmdi-star-outline");
+                document.getElementById("star-item-"+ id).classList.toggle("zmdi-star");
+            }
+        });
+
+
+
+    }
+
 
     function delete_list(id) {
        var r = confirm("Are you sure Delete Todo item?");

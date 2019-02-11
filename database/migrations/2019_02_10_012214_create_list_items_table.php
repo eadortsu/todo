@@ -20,9 +20,9 @@ class CreateListItemsTable extends Migration
             $table->string('tag')->nullable();
             $table->text('comment')->nullable();
             $table->timestamp('time');
-            $table->enum('status',['0','1']); //0 for unchecked item and 1 for checked item
-            $table->enum('starred',['0','1']); //0 for not starred item and 1 for starred item
-            $table->enum('priority',['0','1']); //0 for not priority item and 1 for priority item
+            $table->enum('status',['0','1'])->default('0'); //0 for unchecked item and 1 for checked item
+            $table->enum('starred',['0','1'])->default('0'); //0 for not starred item and 1 for starred item
+            $table->enum('priority',['0','1'])->default('0'); //0 for not priority item and 1 for priority item
             $table->timestamps();
         });
     }
