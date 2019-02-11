@@ -18,12 +18,15 @@ This is web-based checklist/to-do app for employees in sumundi Inc. The app can 
 ## Create an empty database for our application
 
 ## In the .env file, add database information to allow Laravel to connect to the database
+<<<<<<< HEAD
 `DB_CONNECTION=mysql`<br>
 `DB_HOST=127.0.0.1`<br>
 `DB_PORT=3306`<br>
 `DB_DATABASE=homestead`<br>
 `DB_USERNAME=homestead`<br>
 `DB_PASSWORD=secret`<br>
+=======
+>>>>>>> 92f4fc9695e5610bbad92e9fd76d61f10fe967cb
 
 ## Migrate the database
 `php artisan migrate`
